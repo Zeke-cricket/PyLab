@@ -1,35 +1,39 @@
-import random
-#1. 請輸入遊戲人數
-#2. 建立好終極密碼
-#3. 1號玩家請輸入
-# "大於" 30小於"100"
-#4. 2號玩家請輸入 小於30大於100的數字
-print("請輸入玩家人數: ")
-players = int(input())
-#print(type(player))
-print("您輸入的玩家人數:" + str(players) + "人")
-final_num = random.randint(1,100)
-#等等殺掉
-print(final_num)
-max_num = 100
-min_num = 1
-#while
-#要加1
+## 輸入玩家人數
+## 玩家猜數字猜到的遊戲結束
+## 調整最大值 和 最小值
+## initial game
 
-player_answer = 0
-isEnd = True
-while isEnd:
-    for player in range(1,players + 1):
-        print("玩家"+ str(player) + "請輸入大於" + str(min_num) + "和小於" + str(max_num) + "的正整數")
-        player_answer = int(input())
-        if player_answer > final_num:
-            max_num = player_answer 
-        elif player_answer < max_num :
-            min_num = player_answer
-        if final_num == player_answer :
-            print("玩家"+ str(player) + "猜中密碼")
-            isEnd = False
-            break
-        
-    
-        
+import random
+
+class GuessGame :
+    def __init__ (self,player_num=2,max_num=100,min_num=1,isEnd = False,player_input=0):
+        self.player_num = player_num
+        self.answer = random.randint(min_num,max_num)
+        self.isEnd = isEnd
+        self.max_num = max_num
+        self.min_num = min_num
+        self.player_input = player_input
+    def equal_ans(self,input_num):
+        return self.answer == input_num
+    def adjust_num(self,input_num):
+        ## 邏輯性
+        if (input_num > self.answer) and (input_num > self.min_num):
+            self.max_num = input_num
+        else:
+            self.min_num = input_num
+
+##player_input ##遺留程式碼 被利用性最低
+
+## initial game
+guessGame1 = GuessGame()
+print(guessGame1.answer)
+
+
+while not guessGame1.equal_ans(guessGame1.player_input) :
+    guessGame1.player_input = int(input())
+    if not guessGame1.equal_ans(guessGame1.player_input):
+        guessGame1.adjust_num(guessGame1.player_input)
+        print("Please input the number between " + str(guessGame1.max_num) + " And " + str(guessGame1.min_num))
+    else:
+        print("some one guess answer")
+##"break"
